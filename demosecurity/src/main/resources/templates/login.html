@@ -14,12 +14,14 @@
 
     <form action="#" th:action="@{/authenticateUser}" method="post" class="m-5">
 
+        <!-- Login Alert -->
         <div th:if="${param.error}" class="alert alert-danger w-50">
             <i>Sorry! Invalid username or password.</i>
         </div>
 
+        <!-- Logout Alert -->
         <div th:if="${param.logout}" class="alert alert-primary w-50">
-            <i>Successfull Logout!</i>
+            <i>Successfully Logged out!</i>
         </div>
 
 

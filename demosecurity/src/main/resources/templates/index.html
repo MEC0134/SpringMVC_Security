@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+                xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Luv2Code Company Home Page</title>
@@ -9,7 +10,11 @@
     <h2>Luv2Code</h2>
     <hr>
     <h3>Welcome to our companies home page!</h3>
-
+    <hr>
+    <!-- Display User ID and Role -->
+    <p>Hello <span sec:authentication="principal.username"></span></p>
+    <p>User Role(s): <span sec:authentication="principal.authorities"></span></p>
+    <hr>
     <form action="#" th:action="@{/logout}" method="POST">
         <button type="submit" value="logout">Logout</button>
     </form>
