@@ -9,19 +9,25 @@ public class DemoController {
     @GetMapping("/")
     public String homePage() {
 
-        return "index";
+        return "pages/index";
     }
 
     @GetMapping("/leaders")
     public String leaderPage() {
 
-        return "leaders";
+        return "pages/leaders";
     }
 
     @GetMapping("/systems")
     public String systemsPage() {
 
-        return "systems";
+        return "pages/systems";
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+
+        return "alerts/forbidden";
     }
 
 
