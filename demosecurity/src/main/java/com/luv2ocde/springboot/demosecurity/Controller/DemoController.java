@@ -12,5 +12,17 @@ public class DemoController {
         return "index";
     }
 
+    @GetMapping("/leaders")
+    public String leaderPage() {
+
+        return "leaders";
+    }
+
+    @GetMapping("/systems")
+    public String systemsPage() {
+
+        return "systems";
+    }
+
 
 }

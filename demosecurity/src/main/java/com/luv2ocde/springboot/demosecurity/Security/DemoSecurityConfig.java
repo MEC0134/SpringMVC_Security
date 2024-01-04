@@ -25,12 +25,12 @@ public class DemoSecurityConfig {
         UserDetails mary = User.builder()
                 .username("Mary")
                 .password("{noop}test123")
-                .roles("Employee, Manager").build();
+                .roles("Employee", "Manager").build();
 
         UserDetails susan = User.builder()
                 .username("Susan")
                 .password("{noop}test123")
-                .roles("Employee, Manager, Admin").build();
+                .roles("Employee", "Manager", "Admin").build();
 
 
         return new InMemoryUserDetailsManager(john, mary, susan);
@@ -42,7 +42,11 @@ public class DemoSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(configurer ->
-                        configurer.anyRequest().authenticated()
+                        configurer
+                                .requestMatchers("/").hasRole("Employee")
+                                .requestMatchers("/leaders/**").hasRole("Manager")
+                                .requestMatchers("/systems/**").hasRole("Admin")
+                                .anyRequest().authenticated()
                 )
                 .formLogin(form ->
                         form
