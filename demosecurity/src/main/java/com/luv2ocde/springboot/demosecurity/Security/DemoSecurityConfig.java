@@ -13,29 +13,6 @@ import java.net.http.HttpRequest;
 @Configuration
 public class DemoSecurityConfig {
 
-    // Create Demo Users
-    @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
-
-        UserDetails john = User.builder()
-                .username("John")
-                .password("{noop}test123")
-                .roles("Employee").build();
-
-        UserDetails mary = User.builder()
-                .username("Mary")
-                .password("{noop}test123")
-                .roles("Employee", "Manager").build();
-
-        UserDetails susan = User.builder()
-                .username("Susan")
-                .password("{noop}test123")
-                .roles("Employee", "Manager", "Admin").build();
-
-
-        return new InMemoryUserDetailsManager(john, mary, susan);
-    }
-
 
     // Configuration to reference custom login
     @Bean
@@ -50,6 +27,7 @@ public class DemoSecurityConfig {
                 )
                 .exceptionHandling(configurer ->
                         configurer.accessDeniedPage("/access-denied")
+
                 )
                 .formLogin(form ->
                         form

@@ -19,9 +19,13 @@
     <hr>
 
     <!-- Leaders Page Button-->
-    <a class="btn btn-secondary mb-2 ml-5" th:href="@{/leaders}">Leader Meeting (Only for Managers)</a>
+    <div sec:authorize="hasRole('Manager')">
+        <a class="btn btn-secondary mb-2 ml-5" th:href="@{/leaders}">Leader Meeting (Only for Managers)</a>
+    </div>
     <!-- Systems Page Button-->
-    <a class="btn btn-secondary mb-2 ml-5" th:href="@{/systems}">IT Systems Meeting (Only for Admins)</a>
+    <div sec:authorize="hasRole('Admin')">
+        <a class="btn btn-secondary mb-2 ml-5" th:href="@{/systems}">IT Systems Meeting (Only for Admins)</a>
+    </div>
 
     <!-- Logout Form -->
     <form action="#" th:action="@{/logout}" method="POST">
