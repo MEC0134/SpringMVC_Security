@@ -19,11 +19,11 @@
     <hr>
 
     <!-- Leaders Page Button-->
-    <div sec:authorize="hasRole('Manager')">
+    <div sec:authorize="hasRole('MANAGER')">
         <a class="btn btn-secondary mb-2 ml-5" th:href="@{/leaders}">Leader Meeting (Only for Managers)</a>
     </div>
     <!-- Systems Page Button-->
-    <div sec:authorize="hasRole('Admin')">
+    <div sec:authorize="hasRole('ADMIN')">
         <a class="btn btn-secondary mb-2 ml-5" th:href="@{/systems}">IT Systems Meeting (Only for Admins)</a>
     </div>
 

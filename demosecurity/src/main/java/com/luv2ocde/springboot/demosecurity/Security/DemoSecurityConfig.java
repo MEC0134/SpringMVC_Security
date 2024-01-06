@@ -3,15 +3,25 @@ package com.luv2ocde.springboot.demosecurity.Security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.net.http.HttpRequest;
+import javax.sql.DataSource;
 
 @Configuration
 public class DemoSecurityConfig {
+
+
+    /*
+    1. Inject data source Auto-configured by Spring B
+    2. Tell Spring Sec to use JDBC authentication,
+       it will look for users and authorities tables
+    */
+    @Bean
+    public UserDetailsManager userDetailsManager (DataSource dataSource) {
+
+        return new JdbcUserDetailsManager(dataSource);
+    }
 
 
     // Configuration to reference custom login
@@ -20,9 +30,9 @@ public class DemoSecurityConfig {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/").hasRole("Employee")
-                                .requestMatchers("/leaders/**").hasRole("Manager")
-                                .requestMatchers("/systems/**").hasRole("Admin")
+                                .requestMatchers("/").hasRole("EMPLOYEE")
+                                .requestMatchers("/leaders/**").hasRole("MANAGER")
+                                .requestMatchers("/systems/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(configurer ->
@@ -40,6 +50,6 @@ public class DemoSecurityConfig {
 
         return http.build();
     }
-
+    
 
 }
