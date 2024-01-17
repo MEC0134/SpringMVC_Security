@@ -1,26 +1,30 @@
 package com.luv2ocde.springboot.demosecurity.Security;
 
+import com.luv2ocde.springboot.demosecurity.Service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import javax.sql.DataSource;
 
 @Configuration
 public class DemoSecurityConfig {
 
 
-    /*
-    1. Inject data source Auto-configured by Spring B
-    2. Tell Spring Sec to use JDBC authentication,
-       it will look for users and authorities tables
-    */
     @Bean
-    public UserDetailsManager userDetailsManager (DataSource dataSource) {
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        return new JdbcUserDetailsManager(dataSource);
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserService userService) {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService); // set the custom user details service
+        auth.setPasswordEncoder(passwordEncoder()); // set the password encoder - bcrypt
+        return auth;
     }
 
 
@@ -29,27 +33,25 @@ public class DemoSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(configurer ->
-                        configurer
-                                .requestMatchers("/").hasRole("EMPLOYEE")
-                                .requestMatchers("/leaders/**").hasRole("MANAGER")
-                                .requestMatchers("/systems/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
-                )
-                .exceptionHandling(configurer ->
-                        configurer.accessDeniedPage("/access-denied")
+                configurer
+                        .requestMatchers(HttpMethod.GET, "/api/employees").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/api/employees/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
 
-                )
-                .formLogin(form ->
-                        form
-                                .loginPage("/showLoginPage")
-                                .loginProcessingUrl("/authenticateUser")
-                                .permitAll()
-                )
-                .logout(logout -> logout.permitAll() // enable logout
-                );
+        );
+
+        // use HTTP Basic authentication
+        http.httpBasic(Customizer.withDefaults());
+
+        // disable Cross Site Request Forgery (CSRF)
+        // in general, not required for stateless REST APIs that use POST, PUT, DELETE and/or PATCH
+        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }
-    
+
 
 }

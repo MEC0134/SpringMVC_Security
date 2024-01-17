@@ -1,13 +1,13 @@
 USE `employee_directory`;
 
 DROP TABLE IF EXISTS `roles`;
-DROP TABLE IF EXISTS `members`;
+DROP TABLE IF EXISTS `employees`;
 
 --
 -- Table structure for table `members`
 --
 
-CREATE TABLE `members` (
+CREATE TABLE `employees` (
   `user_id` varchar(50) NOT NULL,
   `pw` char(68) NOT NULL,
   `active` tinyint NOT NULL,
@@ -26,8 +26,6 @@ CREATE TABLE `members` (
 
 INSERT INTO `members`
 VALUES
-('john','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('mary','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
 ('susan','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1);
 
 
@@ -48,9 +46,6 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles`
 VALUES
-('john','ROLE_EMPLOYEE'),
-('mary','ROLE_EMPLOYEE'),
-('mary','ROLE_MANAGER'),
 ('susan','ROLE_EMPLOYEE'),
 ('susan','ROLE_MANAGER'),
 ('susan','ROLE_ADMIN');

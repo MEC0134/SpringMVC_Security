@@ -20,16 +20,22 @@
 
     <!-- Leaders Page Button-->
     <div sec:authorize="hasRole('MANAGER')">
-        <a class="btn btn-secondary mb-2 ml-5" th:href="@{/leaders}">Leader Meeting (Only for Managers)</a>
+        <a class="btn btn-secondary mb-2 m-3" th:href="@{/leaders}">Leader Meeting</a>
     </div>
+
     <!-- Systems Page Button-->
     <div sec:authorize="hasRole('ADMIN')">
-        <a class="btn btn-secondary mb-2 ml-5" th:href="@{/systems}">IT Systems Meeting (Only for Admins)</a>
+        <a class="btn btn-secondary mb-2 m-3" th:href="@{/systems}">IT Systems Meeting</a>
+    </div>
+
+    <!-- Add Employee Page Button-->
+    <div sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-secondary mb-2 m-3" th:href="@{/register}">Register a new Employee</a>
     </div>
 
     <!-- Logout Form -->
     <form action="#" th:action="@{/logout}" method="POST">
-        <button type="submit" value="logout" class="btn btn-secondary ml-5">Logout</button>
+        <button type="submit" value="logout" class="btn btn-secondary m-3">Logout</button>
     </form>
 
 </body>

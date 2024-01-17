@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Luv2Code Company Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<h2>Luv2Code - Register</h2>
+<hr>
+
+<div class="container">
+
+    <form action="#" th:action="@{/authenticateUser}" method="post" class="m-5">
+
+        <!-- Login Alert -->
+<!--        <div th:if="${param.error}" class="alert alert-danger w-50">-->
+<!--            <i>Sorry! Invalid username or password.</i>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Logout Alert &ndash;&gt;-->
+<!--        <div th:if="${param.logout}" class="alert alert-primary w-50">-->
+<!--            <i>Successfully Logged out!</i>-->
+<!--        </div>-->
+
+
+        <div class="form-group w-50">
+            <label for="exampleInputEmail1">Username</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="username">
+        </div>
+
+        <div class="form-group w-50">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+        </div>
+
+        <div class="form-group w-50">
+            <label for="exampleInput">Employee Role</label>
+            <input type="text" class="form-control" id="exampleInput" name="role">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
